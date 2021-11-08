@@ -1,12 +1,15 @@
 // import { Button } from '@material-ui/core'
+// import axios from 'axios'
 import { Add, Remove } from '@material-ui/icons'
-import React from 'react'
+// import React, { } from 'react'
 import styled from 'styled-components'
+
+
 import Announcement from '../components/Announcement'
 import Footer from '../components/Footer'
 import NavBar from '../components/NavBar'
 import NewsLetter from '../components/NewsLetter'
-import { categories } from '../data'
+
 
 const Container = styled.div`
     
@@ -60,12 +63,7 @@ const FilterTitle = styled.span`
     margin: 20px;
     font-weight: 200;
     `
-const FilterColor = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    outline: none;
-    `
+
 const FilterColorOption = styled.span ` 
         background-color: ${props=>props.color};
         width: 20px;

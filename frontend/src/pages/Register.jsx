@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import Announcement from '../components/Announcement'
-import NavBar from '../components/NavBar'
+
 
 
 const Container = styled.div `

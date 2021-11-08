@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState,useEffect } from 'react'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import StripeCheckout from 'react-stripe-checkout';
 
 const KEY = "pk_test_51JrZOwSDF9Y1cUHxPgzaliAls0yW7ZmGkCxgn1jFhWb35jILAFstzxUwQRl9EWdQGwc9TBw1IGGAGel41RnGRLxF00fHL4Yz6X"

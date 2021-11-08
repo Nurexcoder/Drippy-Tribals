@@ -3,43 +3,46 @@ import Home from './pages/Home';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 import ProductList from './pages/ProductList'
 import Product from './pages/Product';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Cart from './pages/Cart';
-import Pay from './pages/Pay'
-import Success from './pages/Success'
+
+
 function App() {
   return (
-    <Router >
-        <Switch>
+<Router>
+      <Switch>
+        <Route exact path="/">
+          <Home/> 
+              </Route>
+         
+          <Route  path="/Products/:categories">
+              <ProductList/>
+          </Route>      
+        
+          <Route  path="/Product/:id">
+                <Product/>
+          </Route> 
+          <Route  path="/Cart/:id">
+                <Cart/>
+          </Route>      
+             
+          <Route  path="/Login">
+              <Login/>
+                       </Route>      
+        
+          <Route  path="/Register">
+              <Register/>
+          </Route>      
+
           
-          <Route path='/pay'>
-              
-              <Pay />
 
-            </Route>
-            <Route>
-
-              <Success />
-
-          </Route>
-        </Switch>
-
-
-
-        {/* <Home/>       */}
-        {/* <ProductList/> */}
-        {/* <Product/> */}
-        {/* <Login/> */}
-        {/* <Register/> */}
-        {/* <Cart/> */}
-
-    </Router>
+       </Switch>   
+  </Router>
   );
 }
 

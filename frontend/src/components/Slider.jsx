@@ -86,7 +86,6 @@ cursor: pointer;
 const Slider = () => {
     const [slideIndex, setSlideIndex] = useState(0);
 const handleClick = (direction)=>{
-    console.log("HI");
     if(direction==="left"){
         setSlideIndex(slideIndex > 0 ? slideIndex-1:2);
     }
@@ -97,7 +96,7 @@ const handleClick = (direction)=>{
 
 }
     return (
-        <Container>
+        <Container >
             <Arrow direction="left" onClick={()=>handleClick("left")}>
             <ArrowLeftOutlinedIcon/> 
             </Arrow>
