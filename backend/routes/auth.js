@@ -3,11 +3,10 @@ const User = require("../models/User");
 const CryptoJs = require("crypto-js");
 const jwt = require("jsonwebtoken");
 router.post("/register",async (req,res)=>{
-   
     const newUser = new User({
         username:req.body.username,
         email:req.body.email,
-        password:CryptoJs.AES.encrypt(req.body.password,process.env.PassSec).toString(),
+        password:req.body.password
     });
     try {
         const savedUser = await newUser.save();
@@ -28,11 +27,12 @@ router.post("/login", async (req,res)=>{
     !user && res.status(401).json("Wrong Credintials.. (username)!!");
     
     
-    const hashedPassword = CryptoJs.AES.decrypt(
-        user.password,
-        process.env.PassSec
-        );
-        const Originalpassword = hashedPassword.toString(CryptoJs.enc.Utf8);
+    // const hashedPassword = CryptoJs.AES.decrypt(
+    //     user.password,
+    //     process.env.PassSec
+    //     );
+        const Originalpassword = user.password 
+        // hashedPassword.toString(CryptoJs.enc.Utf8);
         Originalpassword !== req.body.password
              && res.status(401).json("Wrong Credintials..!!");
         const accessToken = jwt.sign(
