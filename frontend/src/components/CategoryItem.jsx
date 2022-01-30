@@ -8,7 +8,7 @@ const Container = styled.div`
     height: 70vh;
     position: relative;
     ${mobile({
-        height:'30vh',
+        height: "30vh",
     })}
 `;
 const Image = styled.img`
