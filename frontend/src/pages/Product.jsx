@@ -139,6 +139,24 @@ const Button = styled.button`
     }
 `;
 const Product = () => {
+    // useEffect(() => {
+    //     console.log("hii");
+    //     const getProducts = async () => {
+    //         try {
+    //             const res = await axios.get(
+    //                 cat
+    //                     ? `${config.url}/api/products?category=${cat}`
+    //                     : `${config.url}/api/products`
+    //             );
+    //             setProducts(res.data);
+    //             console.log(res.data);
+    //             console.log("hiii");
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
+    //     getProducts();
+    // }, [cat, filters, sort]);
     return (
         <Container>
             <Announcement />

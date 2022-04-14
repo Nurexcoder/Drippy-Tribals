@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState,useEffect } from "react";
 import { useLocation } from "react-router";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
@@ -61,7 +61,12 @@ const ProductList = () => {
     console.log(location.pathname);
     const [filters, setFilters] = useState("");
     const [sort, setSort] = useState("newest");
+    const [cate, setCate] = useState()
     const cat = location.pathname.split("/")[2];
+    useEffect(() => {
+        setCate(cat)
+    }, [location])
+    
 
     const handleFilters = (e) => {
         const value = e.target.value;
@@ -70,12 +75,12 @@ const ProductList = () => {
             [e.target.name]: value,
         });
     };
-    // console.log(filters);
+    console.log(filters);
     return (
         <Container>
             <Announcement />
             <NavBar />
-            <Title>Dresses</Title>
+            <Title>{cat.toLocaleUpperCase()}</Title>
             <FilterContainer>
                 <Filter>
                     <FilterText>Filter Products:: </FilterText>

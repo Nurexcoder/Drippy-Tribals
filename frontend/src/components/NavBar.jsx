@@ -4,13 +4,14 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingCartOutlinedIcon from "@material-ui/icons/ShoppingCartOutlined";
 import { Badge } from "@material-ui/core";
 import { mobile } from "../responsive";
+import { Link } from "react-router-dom";
 const Container = styled.div`
     height: 60px;
     margin: 0px;
-    width:100%;
+    width: 100%;
     ${mobile({
         height: "40px",
-        margin:'0'
+        margin: "0",
     })}
 `;
 
@@ -29,8 +30,8 @@ const Left = styled.div`
 
     align-items: center;
     ${mobile({
-        justifyContent:'center',
-        flex:'0.4'
+        justifyContent: "center",
+        flex: "0.4",
     })}
 `;
 const Center = styled.div`
@@ -42,9 +43,8 @@ const Right = styled.div`
     align-items: center;
     justify-content: flex-end;
     ${mobile({
-        flex:'2',
-        justifyContent:'space-evenly'
-
+        flex: "2",
+        justifyContent: "space-evenly",
     })}
 `;
 const Language = styled.span`
@@ -52,7 +52,7 @@ const Language = styled.span`
     cursor: pointer;
     margin-right: 20px;
     ${mobile({
-        display:"none"
+        display: "none",
     })}
 `;
 const SearchContainer = styled.div`
@@ -69,7 +69,7 @@ const Input = styled.input`
 const Logo = styled.h1`
     font-style: bold;
     text-align: center;
-    margin:0 ;
+    margin: 0;
     ${mobile({
         fontSize: "20px",
     })}
@@ -96,8 +96,12 @@ const NavBar = () => {
                     <Logo>Shopify</Logo>
                 </Center>
                 <Right>
-                    <ManuItems>REGISTER</ManuItems>
-                    <ManuItems>SIGN IN</ManuItems>
+                    <Link to='/register'>
+                        <ManuItems>REGISTER</ManuItems>
+                    </Link>
+                    <Link to='/login'>
+                        <ManuItems>SIGN IN</ManuItems>
+                    </Link>
                     <Badge badgeContent={3} color='primary'>
                         <ShoppingCartOutlinedIcon />
                     </Badge>

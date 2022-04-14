@@ -4,13 +4,14 @@ const CryptoJs = require("crypto-js");
 const jwt = require("jsonwebtoken");
 
 router.post("/register", async (req, res) => {
+    console.log(res.body);
     const newUser = new User({
         username: req.body.username,
         email: req.body.email,
         password: CryptoJs.AES.encrypt(
             req.body.password,
             process.env.PASS_SEC
-        ).toString()
+        ).toString(),
     });
     console.log(newUser);
     try {
@@ -38,19 +39,20 @@ router.post("/login", async (req, res) => {
 
         const inputPassword = req.body.password;
 
-        originalPassword !== inputPassword &&
-            res.status(401).json("Wrong Password");
-
+        if (originalPassword !== inputPassword) {
+            return res.status(401).json("Wrong Password");
+        }
+        console.log("Hi");
         const accessToken = jwt.sign(
             {
                 id: user._id,
                 isAdmin: user.isAdmin,
             },
-            process.env.JWT_PASS
+            process.env.JWT_SEC
         );
 
         const { password, ...others } = user._doc;
-        res.status(200).json({  ...others,accessToken });
+        res.status(200).json({ ...others, accessToken });
     } catch (error) {
         res.status(400).send(error);
     }

@@ -7,26 +7,17 @@ const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
 const cartRoute = require("./routes/cart");
 const stripeRoute = require("./routes/stripe");
+const mongoConnect = require("./db");
 const cors = require("cors");
 
 const app = express();
 dotenv.config();
-// app.use(cors)
+app.use(cors());
 app.use(express.json());
+mongoConnect();
+const PORT = 5000;
 
-const PORT = process.env.PORT || 5000;
 
-mongoose
-    .connect(process.env.MONGO_URL2, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
-    .then(() =>
-        app.listen(PORT, () =>
-            console.log(`Server Running on Port: http://localhost:${PORT}`)
-        )
-    )
-    .catch((error) => console.log(`${error} did not connect`));
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/products", productRoute);
@@ -37,3 +28,6 @@ app.get("/", (req, res) => {
     console.log("Hello");
     res.send("hello");
 });
+app.listen(PORT, () =>
+    console.log(`Server Running on Port: http://localhost:${PORT}`)
+);
