@@ -1,7 +1,7 @@
 // import { Button } from '@material-ui/core'
 // import axios from 'axios'
 import { Add, Remove } from "@material-ui/icons";
-// import React, { } from 'react'
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 import Announcement from "../components/Announcement";
@@ -9,6 +9,10 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import NewsLetter from "../components/NewsLetter";
 import { mobile } from "../responsive";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+import config from "../data/config";
+import { CircularProgress } from "@material-ui/core";
 
 const Container = styled.div`
     margin: 10px 0;
@@ -28,10 +32,10 @@ const ImageContainer = styled.div`
 `;
 const Image = styled.img`
     width: 100%;
-    height: 90vh;
+    height: auto;
     object-fit: cover;
     ${mobile({
-       height:'50vh'
+        height: "50vh",
     })}
 `;
 const InfoContainer = styled.div`
@@ -44,15 +48,15 @@ const InfoContainer = styled.div`
 const Title = styled.h1`
     font-weight: 200;
     ${mobile({
-        width:'100%',
-        padding: '0 2px'
+        width: "100%",
+        padding: "0 2px",
     })}
 `;
 const Desc = styled.p`
     margin: 20px 0;
     ${mobile({
-        width:'100%',
-        padding: '0 2px'
+        width: "100%",
+        padding: "0 2px",
     })}
 `;
 const Price = styled.span`
@@ -66,8 +70,8 @@ const FilterContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     ${mobile({
-        width:'100%',
-        padding: '0 2px'
+        width: "100%",
+        padding: "0 2px",
     })}
 `;
 const Filter = styled.div`
@@ -80,7 +84,7 @@ const FilterTitle = styled.span`
     margin: 20px;
     font-weight: 200;
     ${mobile({
-        margin: '10px 2px'
+        margin: "10px 2px",
     })}
 `;
 
@@ -113,7 +117,7 @@ const AmountContainer = styled.div`
     align-items: center;
     font-weight: 700;
     ${mobile({
-        margin:'10px 0'
+        margin: "10px 0",
     })}
 `;
 const Amount = styled.span`
@@ -139,77 +143,87 @@ const Button = styled.button`
     }
 `;
 const Product = () => {
-    // useEffect(() => {
-    //     console.log("hii");
-    //     const getProducts = async () => {
-    //         try {
-    //             const res = await axios.get(
-    //                 cat
-    //                     ? `${config.url}/api/products?category=${cat}`
-    //                     : `${config.url}/api/products`
-    //             );
-    //             setProducts(res.data);
-    //             console.log(res.data);
-    //             console.log("hiii");
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
-    //     getProducts();
-    // }, [cat, filters, sort]);
+    const location = useLocation();
+
+    const id = location.pathname.split("/")[2];
+    const [product, setProduct] = useState([]);
+    useEffect(() => {
+        console.log("hii");
+        const getProduct = async () => {
+            try {
+                const res = await axios.get(
+                    `${config.url}/products/find/${id}`
+                );
+                setProduct(res.data);
+                console.log(res.data);
+                console.log("hiii");
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        getProduct();
+    }, [id]);
     return (
-        <Container>
-            <Announcement />
-            <NavBar />
-            <Wrapper>
-                <ImageContainer>
-                    <Image src='https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940' />
-                </ImageContainer>
-                <InfoContainer>
-                    <Title>Lorem ipsum dolor sit amet.</Title>
-                    <Desc>
-                        Lorem ipsum dolor sit amet consectetur adipisici ng
-                        elit. Vero impedit rerum tempora, aliquid ea
-                        exercitationem!
-                    </Desc>
-                    <Price>$20</Price>
+        <>
+            {product ? (
+                <Container>
+                    <Announcement />
+                    <NavBar />
+                    <Wrapper>
+                        <ImageContainer>
+                            <Image src={product.img} />
+                        </ImageContainer>
+                        <InfoContainer>
+                            <Title>Lorem ipsum dolor sit amet.</Title>
+                            <Desc>
+                                Lorem ipsum dolor sit amet consectetur adipisici
+                                ng elit. Vero impedit rerum tempora, aliquid ea
+                                exercitationem!
+                            </Desc>
+                            <Price>$20</Price>
 
-                    <FilterContainer>
-                        <Filter>
-                            <FilterTitle>Color</FilterTitle>
-                            {/* <FilterColor> */}
-                            <FilterColorOption color='black' />
-                            <FilterColorOption color='grey' />
-                            <FilterColorOption color='blue' />
-                            {/* </FilterColor> */}
-                        </Filter>
-                        <Filter>
-                            <FilterTitle>Size</FilterTitle>
-                            <FilterSize>
-                                <FilterSizeOption>XS</FilterSizeOption>
-                                <FilterSizeOption>S</FilterSizeOption>
-                                <FilterSizeOption>M</FilterSizeOption>
-                                <FilterSizeOption>L</FilterSizeOption>
-                                <FilterSizeOption>XL</FilterSizeOption>
-                                <FilterSizeOption>XXL</FilterSizeOption>
-                                <FilterSizeOption>XXXL</FilterSizeOption>
-                            </FilterSize>
-                        </Filter>
-                    </FilterContainer>
-                    <AddContainer>
-                        <AmountContainer>
-                            <Remove />
-                            <Amount>1</Amount>
-                            <Add />
-                        </AmountContainer>
+                            <FilterContainer>
+                                <Filter>
+                                    <FilterTitle>Color</FilterTitle>
+                                    {/* <FilterColor> */}
+                                    <FilterColorOption color='black' />
+                                    <FilterColorOption color='grey' />
+                                    <FilterColorOption color='blue' />
+                                    {/* </FilterColor> */}
+                                </Filter>
+                                <Filter>
+                                    <FilterTitle>Size</FilterTitle>
+                                    <FilterSize>
+                                        <FilterSizeOption>XS</FilterSizeOption>
+                                        <FilterSizeOption>S</FilterSizeOption>
+                                        <FilterSizeOption>M</FilterSizeOption>
+                                        <FilterSizeOption>L</FilterSizeOption>
+                                        <FilterSizeOption>XL</FilterSizeOption>
+                                        <FilterSizeOption>XXL</FilterSizeOption>
+                                        <FilterSizeOption>
+                                            XXXL
+                                        </FilterSizeOption>
+                                    </FilterSize>
+                                </Filter>
+                            </FilterContainer>
+                            <AddContainer>
+                                <AmountContainer>
+                                    <Remove />
+                                    <Amount>1</Amount>
+                                    <Add />
+                                </AmountContainer>
 
-                        <Button>Add to Card</Button>
-                    </AddContainer>
-                </InfoContainer>
-            </Wrapper>
-            <NewsLetter />
-            <Footer />
-        </Container>
+                                <Button>Add to Card</Button>
+                            </AddContainer>
+                        </InfoContainer>
+                    </Wrapper>
+                    <NewsLetter />
+                    <Footer />
+                </Container>
+            ) : (
+                <CircularProgress />
+            )}
+        </>
     );
 };
 

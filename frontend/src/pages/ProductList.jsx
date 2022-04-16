@@ -57,6 +57,7 @@ const Option = styled.option`
 `;
 // const
 const ProductList = () => {
+    
     const location = useLocation();
     console.log(location.pathname);
     const [filters, setFilters] = useState("");
