@@ -31,7 +31,7 @@ const ImageContainer = styled.div`
     flex: 1;
 `;
 const Image = styled.img`
-    width: 100%;
+    width: 80%;
     height: auto;
     object-fit: cover;
     ${mobile({
@@ -146,7 +146,7 @@ const Product = () => {
     const location = useLocation();
 
     const id = location.pathname.split("/")[2];
-    const [product, setProduct] = useState([]);
+    const [product, setProduct] = useState();
     useEffect(() => {
         console.log("hii");
         const getProduct = async () => {
@@ -163,9 +163,10 @@ const Product = () => {
         };
         getProduct();
     }, [id]);
+    // console.log(product.color);
     return (
         <>
-            {product ? (
+            {product && product.length !== 0 ? (
                 <Container>
                     <Announcement />
                     <NavBar />
@@ -174,35 +175,36 @@ const Product = () => {
                             <Image src={product.img} />
                         </ImageContainer>
                         <InfoContainer>
-                            <Title>Lorem ipsum dolor sit amet.</Title>
-                            <Desc>
-                                Lorem ipsum dolor sit amet consectetur adipisici
-                                ng elit. Vero impedit rerum tempora, aliquid ea
-                                exercitationem!
-                            </Desc>
-                            <Price>$20</Price>
+                            <Title>{product.title}</Title>
+                            <Desc>{product.desc}</Desc>
+                            <Price>$ {product.price}</Price>
 
                             <FilterContainer>
                                 <Filter>
                                     <FilterTitle>Color</FilterTitle>
                                     {/* <FilterColor> */}
-                                    <FilterColorOption color='black' />
-                                    <FilterColorOption color='grey' />
-                                    <FilterColorOption color='blue' />
+                                    {product.color.length !== 0 &&
+                                        product.color.map((c) => {
+                                            return (
+                                                <FilterColorOption color={c} />
+                                            );
+                                        })}
+
                                     {/* </FilterColor> */}
                                 </Filter>
                                 <Filter>
                                     <FilterTitle>Size</FilterTitle>
                                     <FilterSize>
-                                        <FilterSizeOption>XS</FilterSizeOption>
-                                        <FilterSizeOption>S</FilterSizeOption>
-                                        <FilterSizeOption>M</FilterSizeOption>
-                                        <FilterSizeOption>L</FilterSizeOption>
-                                        <FilterSizeOption>XL</FilterSizeOption>
-                                        <FilterSizeOption>XXL</FilterSizeOption>
-                                        <FilterSizeOption>
-                                            XXXL
-                                        </FilterSizeOption>
+                                        {product.size &&
+                                        product.size.length !== 0
+                                            ? product.size.map((s) => (
+                                                  <FilterSizeOption>
+                                                      {s}
+                                                  </FilterSizeOption>
+                                              ))
+                                            : ""}
+
+                                       
                                     </FilterSize>
                                 </Filter>
                             </FilterContainer>
