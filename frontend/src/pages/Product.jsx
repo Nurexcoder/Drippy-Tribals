@@ -3,7 +3,7 @@
 import { Add, Remove } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import styled from "styled-components";
-
+import { useDispatch } from "react-redux";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
@@ -12,7 +12,10 @@ import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import config from "../data/config";
+
 import { CircularProgress } from "@material-ui/core";
+import Loading from "../components/Loading";
+import { addProduct } from "../redux/cartReducer";
 
 const Container = styled.div`
     margin: 10px 0;
@@ -147,6 +150,11 @@ const Product = () => {
 
     const id = location.pathname.split("/")[2];
     const [product, setProduct] = useState();
+    const [quantity, setQuantity] = useState(1);
+    const [color, setColor] = useState(1)
+    const [size, setSize] = useState(1)
+
+    const dispatch = useDispatch();
     useEffect(() => {
         console.log("hii");
         const getProduct = async () => {
@@ -155,7 +163,10 @@ const Product = () => {
                     `${config.url}/products/find/${id}`
                 );
                 setProduct(res.data);
-                console.log(res.data);
+                const tempP=res.data
+                setColor(tempP.color[0])
+                setSize(res.data.size[0])
+                // console.log(res.data);
                 console.log("hiii");
             } catch (error) {
                 console.log(error);
@@ -163,7 +174,19 @@ const Product = () => {
         };
         getProduct();
     }, [id]);
+    // const handleQuantity=(cmd)=>{
+    //     if(cmd==="inc"){
+    //         setQuantity(quantity+1)
+    //     }
+    //     else if(cmd==="desc"){
+    //         setQuantity(quantity+1)
+    //     }
+    // }
     // console.log(product.color);
+    const handleCart = () => {
+        dispatch(addProduct({ ...product,quantity,color,size}));
+    };
+
     return (
         <>
             {product && product.length !== 0 ? (
@@ -186,7 +209,8 @@ const Product = () => {
                                     {product.color.length !== 0 &&
                                         product.color.map((c) => {
                                             return (
-                                                <FilterColorOption color={c} />
+                                                
+                                                <FilterColorOption  key={c} color={c} />
                                             );
                                         })}
 
@@ -198,24 +222,31 @@ const Product = () => {
                                         {product.size &&
                                         product.size.length !== 0
                                             ? product.size.map((s) => (
-                                                  <FilterSizeOption>
+                                                  <FilterSizeOption key={s} onClick={setSize(s)}>
                                                       {s}
                                                   </FilterSizeOption>
                                               ))
                                             : ""}
-
-                                       
                                     </FilterSize>
                                 </Filter>
                             </FilterContainer>
                             <AddContainer>
                                 <AmountContainer>
-                                    <Remove />
-                                    <Amount>1</Amount>
-                                    <Add />
+                                    <Remove
+                                        onClick={() =>
+                                            quantity &&
+                                            setQuantity(quantity - 1)
+                                        }
+                                    />
+                                    <Amount>{quantity}</Amount>
+                                    <Add
+                                        onClick={() =>
+                                            setQuantity(quantity + 1)
+                                        }
+                                    />
                                 </AmountContainer>
 
-                                <Button>Add to Card</Button>
+                                <Button onClick={handleCart}>Add to Card</Button>
                             </AddContainer>
                         </InfoContainer>
                     </Wrapper>
@@ -223,7 +254,7 @@ const Product = () => {
                     <Footer />
                 </Container>
             ) : (
-                <CircularProgress />
+                <Loading />
             )}
         </>
     );

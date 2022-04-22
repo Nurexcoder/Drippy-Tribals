@@ -1,5 +1,6 @@
 import { Add, Remove } from "@material-ui/icons";
 import React from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
@@ -87,14 +88,14 @@ const ProductDetails = styled.div`
     flex: 2;
     display: flex;
     ${mobile({
-        flex:'3'
+        flex: "3",
     })}
 `;
 const Image = styled.img`
     width: 30%;
     ${mobile({
-        width:'60%',
-        height:'auto'
+        width: "60%",
+        height: "auto",
     })}
 `;
 const Details = styled.span`
@@ -102,14 +103,14 @@ const Details = styled.span`
     display: flex;
     flex-direction: column;
     ${mobile({
-        padding:'20px 0'
+        padding: "20px 0",
     })}
 `;
 const ProductName = styled.span`
     font-weight: 100;
     padding: 10px;
     ${mobile({
-        padding:'5px'
+        padding: "5px",
     })}
 `;
 const ProductId = styled.span`
@@ -122,7 +123,7 @@ const Color = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: pink;
+    background-color: ${(props)=>props.color};
     margin: 10px 5px;
 `;
 const PriceDetails = styled.div`
@@ -198,6 +199,8 @@ const Button = styled.button`
 // `
 
 const Cart = () => {
+    const cart = useSelector((state) => state.cart);
+    console.log(cart);
     return (
         <Container>
             <NavBar />
@@ -207,138 +210,66 @@ const Cart = () => {
                 <Top>
                     <TopButton>CONTINUE SHOPING</TopButton>
                     <TopTexts>
-                        <TopText>SHOPPING BAG(2)</TopText>
+                        <TopText>SHOPPING BAG({cart.quantity})</TopText>
                         <TopText>YOUR WISHLIST(0)</TopText>
                     </TopTexts>
                     <TopButton type='filled'>CHECKOUT NOW</TopButton>
                 </Top>
                 <Bottom>
                     <Info>
-                        <Product>
-                            <ProductDetails>
-                                <Image src='https://i.ibb.co/cXFnLLV/3.png' />
-                                <Details>
-                                    <ProductName>
-                                        <b>PRODUCT:</b> JESSIE THUNDER SHOES
-                                    </ProductName>
-                                    <ProductId>
-                                        <b>ID:</b> 12121110
-                                    </ProductId>
-                                    <Color />
-                                    <ProductSize>
-                                        <b>SIZE:</b> XL
-                                    </ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetails>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <Price>$20</Price>
-                            </PriceDetails>
-                        </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetails>
-                                <Image src='https://i.ibb.co/cXFnLLV/3.png' />
-                                <Details>
-                                    <ProductName>
-                                        <b>PRODUCT:</b> JESSIE THUNDER SHOES
-                                    </ProductName>
-                                    <ProductId>
-                                        <b>ID:</b> 12121110
-                                    </ProductId>
-                                    <Color />
-                                    <ProductSize>
-                                        <b>SIZE:</b> XL
-                                    </ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetails>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <Price>$20</Price>
-                            </PriceDetails>
-                        </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetails>
-                                <Image src='https://i.ibb.co/cXFnLLV/3.png' />
-                                <Details>
-                                    <ProductName>
-                                        <b>PRODUCT:</b> JESSIE THUNDER SHOES
-                                    </ProductName>
-                                    <ProductId>
-                                        <b>ID:</b> 12121110
-                                    </ProductId>
-                                    <Color />
-                                    <ProductSize>
-                                        <b>SIZE:</b> XL
-                                    </ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetails>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <Price>$20</Price>
-                            </PriceDetails>
-                        </Product>
-                        <Hr />
-                        <Product>
-                            <ProductDetails>
-                                <Image src='https://i.ibb.co/cXFnLLV/3.png' />
-                                <Details>
-                                    <ProductName>
-                                        <b>PRODUCT:</b> JESSIE THUNDER SHOES
-                                    </ProductName>
-                                    <ProductId>
-                                        <b>ID:</b> 12121110
-                                    </ProductId>
-                                    <Color />
-                                    <ProductSize>
-                                        <b>SIZE:</b> XL
-                                    </ProductSize>
-                                </Details>
-                            </ProductDetails>
-                            <PriceDetails>
-                                <ProductAmountContainer>
-                                    <Add />
-                                    <ProductAmount>2</ProductAmount>
-                                    <Remove />
-                                </ProductAmountContainer>
-                                <Price>$20</Price>
-                            </PriceDetails>
-                        </Product>
+                        {cart &&
+                            cart.products.map((product) => (
+                                <>
+                                    <Product>
+                                        <ProductDetails>
+                                            <Image src={product.img} />
+                                            <Details>
+                                                <ProductName>
+                                                    <b>PRODUCT:</b> {product.title}
+                                                </ProductName>
+                                                {/* <ProductId>
+                                                    <b>ID:</b> 12121110
+                                                </ProductId> */}
+                                                <Color  color={product.color}/>
+                                                <ProductSize>
+                                                    <b>SIZE:</b> {product.size}
+                                                </ProductSize>
+                                            </Details>
+                                        </ProductDetails>
+                                        <PriceDetails>
+                                            <ProductAmountContainer>
+                                                <Add />
+                                                <ProductAmount>{product.quantity}</ProductAmount>
+                                                <Remove />
+                                            </ProductAmountContainer>
+                                            <Price>${product.price}</Price>
+                                        </PriceDetails>
+                                    </Product>
+                                    <Hr />
+                                </>
+                            ))}
                     </Info>
                     <Summary>
                         <SummaryTitle>ORDER SUMMARY</SummaryTitle>
                         <SummaryItem>
                             <SummaryItemText>SUB TOTAL</SummaryItemText>
-                            <SummaryPrice>$40</SummaryPrice>
+                            <SummaryPrice>${cart.total}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>
                                 ESTIMATED SHIPPING
                             </SummaryItemText>
-                            <SummaryPrice>$10</SummaryPrice>
+                            <SummaryPrice>${cart.shift||0}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>SHIPPING DISCOUNT</SummaryItemText>
-                            <SummaryPrice>-$10</SummaryPrice>
+                            <SummaryPrice>-${cart.discount||0}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText type='total'>
                                 TOTAL
                             </SummaryItemText>
-                            <SummaryPrice type='total'>$40</SummaryPrice>
+                            <SummaryPrice type='total'>${cart.total}</SummaryPrice>
                         </SummaryItem>
                         <Button>CHECKOUT NOW</Button>
                     </Summary>

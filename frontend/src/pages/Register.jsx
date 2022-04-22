@@ -77,7 +77,7 @@ const Register = () => {
 
         try {
             handleToggle();
-            const res = await axios(`${config.url}/api/auth/register`, {
+            const res = await axios(`${config.url}/auth/register`, {
                 method: "POST",
                 data: submitData,
             });
