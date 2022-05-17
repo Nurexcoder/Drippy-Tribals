@@ -6,6 +6,7 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { mobile } from "../responsive";
+import axios from "axios";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -123,7 +124,7 @@ const Color = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: ${(props)=>props.color};
+    background-color: ${(props) => props.color};
     margin: 10px 5px;
 `;
 const PriceDetails = styled.div`
@@ -200,7 +201,83 @@ const Button = styled.button`
 
 const Cart = () => {
     const cart = useSelector((state) => state.cart);
-    console.log(cart);
+    const user = useSelector((state) => state.user);
+
+    console.log(user);
+    const logo = "/a.png";
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = () => {
+                resolve(true);
+            };
+            script.onerror = () => {
+                resolve(false);
+            };
+            document.body.appendChild(script);
+        });
+    }
+
+    async function displayRazorpay() {
+        const res = await loadScript(
+            "https://checkout.razorpay.com/v1/checkout.js"
+        );
+
+        if (!res) {
+            alert("Razorpay SDK failed to load. Are you online?");
+            return;
+        }
+
+        const result = await axios.post("http://localhost:5000/api/payment/orders",{...cart});
+
+        if (!result) {
+            alert("Server error. Are you online?");
+            return;
+        }
+
+        const { amount, id: order_id, currency } = result.data;
+
+        const options = {
+            key: "rzp_live_mQyoFR1DwIgL5m", // Enter the Key ID generated from the Dashboard
+            amount: amount.toString(),
+            currency: currency,
+            name: "Soumya Corp.",
+            description: "Test Transaction",
+            image: { logo },
+            order_id: order_id,
+            handler: async function (response) {
+                const data = {
+                    orderCreationId: order_id,
+                    razorpayPaymentId: response.razorpay_payment_id,
+                    razorpayOrderId: response.razorpay_order_id,
+                    razorpaySignature: response.razorpay_signature,
+                    cart
+                };
+
+                const result = await axios.post(
+                    "http://localhost:5000/api/payment/success",
+                    data
+                );
+
+                alert(result.data.msg);
+            },
+            prefill: {
+                name: "Hibjul Ahmed",
+                email: "hibjulahmed@gmail.com",
+                contact: user.phone||"9999999999",
+            },
+            notes: {
+                address: user.address||"Soumya Dey Corporate Office",
+            },
+            theme: {
+                color: "#61dafb",
+            },
+        };
+
+        const paymentObject = new window.Razorpay(options);
+        paymentObject.open();
+    }
     return (
         <Container>
             <NavBar />
@@ -213,7 +290,9 @@ const Cart = () => {
                         <TopText>SHOPPING BAG({cart.quantity})</TopText>
                         <TopText>YOUR WISHLIST(0)</TopText>
                     </TopTexts>
-                    <TopButton type='filled'>CHECKOUT NOW</TopButton>
+                    <TopButton onClick={displayRazorpay} type='filled'>
+                        CHECKOUT NOW
+                    </TopButton>
                 </Top>
                 <Bottom>
                     <Info>
@@ -225,12 +304,13 @@ const Cart = () => {
                                             <Image src={product.img} />
                                             <Details>
                                                 <ProductName>
-                                                    <b>PRODUCT:</b> {product.title}
+                                                    <b>PRODUCT:</b>{" "}
+                                                    {product.title}
                                                 </ProductName>
                                                 {/* <ProductId>
                                                     <b>ID:</b> 12121110
                                                 </ProductId> */}
-                                                <Color  color={product.color}/>
+                                                <Color color={product.color} />
                                                 <ProductSize>
                                                     <b>SIZE:</b> {product.size}
                                                 </ProductSize>
@@ -239,7 +319,9 @@ const Cart = () => {
                                         <PriceDetails>
                                             <ProductAmountContainer>
                                                 <Add />
-                                                <ProductAmount>{product.quantity}</ProductAmount>
+                                                <ProductAmount>
+                                                    {product.quantity}
+                                                </ProductAmount>
                                                 <Remove />
                                             </ProductAmountContainer>
                                             <Price>${product.price}</Price>
@@ -259,17 +341,19 @@ const Cart = () => {
                             <SummaryItemText>
                                 ESTIMATED SHIPPING
                             </SummaryItemText>
-                            <SummaryPrice>${cart.shift||0}</SummaryPrice>
+                            <SummaryPrice>${cart.shift || 0}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText>SHIPPING DISCOUNT</SummaryItemText>
-                            <SummaryPrice>-${cart.discount||0}</SummaryPrice>
+                            <SummaryPrice>-${cart.discount || 0}</SummaryPrice>
                         </SummaryItem>
                         <SummaryItem>
                             <SummaryItemText type='total'>
                                 TOTAL
                             </SummaryItemText>
-                            <SummaryPrice type='total'>${cart.total}</SummaryPrice>
+                            <SummaryPrice type='total'>
+                                ${cart.total}
+                            </SummaryPrice>
                         </SummaryItem>
                         <Button>CHECKOUT NOW</Button>
                     </Summary>

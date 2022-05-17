@@ -1,4 +1,5 @@
 const express = require("express");
+const firebaseAuth=require("./routes/firebaseAuth")
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userRoute = require("./routes/user");
@@ -10,6 +11,8 @@ const stripeRoute = require("./routes/stripe");
 const mongoConnect = require("./db");
 const cors = require("cors");
 
+// apps()
+// const analytics = getAnalytics(app2);
 const app = express();
 dotenv.config();
 app.use(cors());

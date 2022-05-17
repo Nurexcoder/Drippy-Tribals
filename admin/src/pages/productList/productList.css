@@ -1,3 +1,6 @@
+.productTitleContainer{
+    margin: 15px 5px;
+}
 .productList{
     flex: 4;
 }

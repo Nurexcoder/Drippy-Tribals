@@ -8,9 +8,9 @@ import { Button } from "@material-ui/core";
 export default function Product() {
     return (
         <>
-            <Link to='/newproduct'>
+            {/* <Link to='/newproduct'>
                 <Button>Add Product</Button>
-            </Link>
+            </Link> */}
             <div className='product'>
                 <div className='productTitleContainer'>
                     <h1 className='productTitle'>Product</h1>

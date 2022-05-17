@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+// import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { login } from "../redux/apiCalls";
+import { publicUrl } from "../../config";
+// import { login } from "../redux/apiCalls";
 
 // import Link from 'react-dom'
 
@@ -62,17 +64,38 @@ const Error = styled.span`
     color: red;
 `;
 
-const Register = () => {
+const Login = ({ setUser, hi }) => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    const dispatch = useDispatch();
-    const { isFetching, error } = useSelector((state) => state.user);
-    const handleLogin = (e) => {
+    const [isFetching, setIsFetching] = useState(false);
+    const [error, setError] = useState(false);
+    const history = useHistory();
+    // console.log(hi);
+    // const dispatch = useDispatch();
+    // const { isFetching, error } = useSelector((state) => state.user);
+    const handleLogin = async (e) => {
         e.preventDefault();
-        login(dispatch, { username, password });
+        setIsFetching(true);
+
+        try {
+            const res = await publicUrl.post("/auth/login", {
+                username: username,
+                password: password,
+            });
+            setIsFetching(false);
+            localStorage.setItem("user", JSON.stringify(res.data));
+            console.log(res.data);
+            // setUser(res.data);
+            history.push("/");
+        } catch (error) {
+            console.log(error);
+            setIsFetching(false);
+            // console.error();
+            setError(true);
+        }
     };
 
-    console.log(isFetching);
+    // console.log(isFetching);/
     return (
         <Container>
             <Wrapper>
@@ -98,4 +121,4 @@ const Register = () => {
     );
 };
 
-export default Register;
+export default Login;
