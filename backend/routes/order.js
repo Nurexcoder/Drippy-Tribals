@@ -5,7 +5,9 @@ const { verifyTokenAndAuth,verifyToken, verifyTokenAndAuthAdmin } = require("./v
 // Create Order items
 
 router.post("/",verifyToken, async (req,res)=>{
+    console.log("Hi");
     const newOrder = new Order(req.body)
+    console.log(req.body);
     try {
         const savedOrder = await newOrder.save();
         res.status(200).json(savedOrder);

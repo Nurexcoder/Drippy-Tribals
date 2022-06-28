@@ -13,13 +13,15 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Checkout from "./pages/Checkout";
 
 function App() {
-    const user=useSelector(state=>state.user.currentUser);
+    const user = useSelector((state) => state.user.currentUser);
     return (
         <Router>
             <Routes>
                 <Route exact path='/' element={<Home />} />
+                <Route exact path='/checkout' element={<Checkout />} />
 
                 <Route path='/Products/:categories' element={<ProductList />} />
 

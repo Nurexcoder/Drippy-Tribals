@@ -29,7 +29,7 @@ export default function NewProduct() {
         newForm.append("price", productData.price);
         newForm.append("availablePieces", productData.availablePieces);
         // newForm.append("typeOf", productData.typeOf);
-        newForm.append("inStock", productData.inStock);
+        newForm.append("inStock", true);
         // newForm.append('file',productData.file)
         try {
             

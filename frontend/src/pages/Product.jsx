@@ -151,8 +151,8 @@ const Product = () => {
     const id = location.pathname.split("/")[2];
     const [product, setProduct] = useState();
     const [quantity, setQuantity] = useState(1);
-    const [color, setColor] = useState(1)
-    const [size, setSize] = useState(1)
+    const [color, setColor] = useState(1);
+    const [size, setSize] = useState(1);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -163,9 +163,9 @@ const Product = () => {
                     `${config.url}/products/find/${id}`
                 );
                 setProduct(res.data);
-                const tempP=res.data
-                setColor(tempP.color[0])
-                setSize(res.data.size[0])
+                const tempP = res.data;
+                setColor(tempP.color[0]);
+                setSize(res.data.size[0]);
                 // console.log(res.data);
                 console.log("hiii");
             } catch (error) {
@@ -184,7 +184,7 @@ const Product = () => {
     // }
     // console.log(product.color);
     const handleCart = () => {
-        dispatch(addProduct({ ...product,quantity,color,size}));
+        dispatch(addProduct({ ...product, quantity, color, size }));
     };
 
     return (
@@ -202,10 +202,10 @@ const Product = () => {
                             <Desc>{product.desc}</Desc>
                             <Price>$ {product.price}</Price>
 
-                            <FilterContainer>
+                            {/* <FilterContainer>
                                 <Filter>
                                     <FilterTitle>Color</FilterTitle>
-                                    {/* <FilterColor> */}
+                                    {/* <FilterColor> *
                                     {product.color.length !== 0 &&
                                         product.color.map((c) => {
                                             return (
@@ -214,7 +214,7 @@ const Product = () => {
                                             );
                                         })}
 
-                                    {/* </FilterColor> */}
+                                    {/* </FilterColor> *
                                 </Filter>
                                 <Filter>
                                     <FilterTitle>Size</FilterTitle>
@@ -229,7 +229,7 @@ const Product = () => {
                                             : ""}
                                     </FilterSize>
                                 </Filter>
-                            </FilterContainer>
+                            </FilterContainer> */}
                             <AddContainer>
                                 <AmountContainer>
                                     <Remove
@@ -246,7 +246,9 @@ const Product = () => {
                                     />
                                 </AmountContainer>
 
-                                <Button onClick={handleCart}>Add to Card</Button>
+                                <Button onClick={handleCart}>
+                                    Add to Card
+                                </Button>
                             </AddContainer>
                         </InfoContainer>
                     </Wrapper>

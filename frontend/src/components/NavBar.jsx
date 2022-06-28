@@ -183,26 +183,29 @@ const NavBar = () => {
                                     horizontal: "right",
                                     vertical: "bottom",
                                 }}>
-                                <MenuItem>
+                                {/* <MenuItem>
                                     <Avatar /> Profile
-                                </MenuItem>
+                                </MenuItem> */}
                                 <MenuItem>
                                     <Avatar /> My account
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem>
+                                {/* <MenuItem>
                                     <ListItemIcon>
                                         <PersonAdd fontSize='small' />
                                     </ListItemIcon>
                                     Add another account
-                                </MenuItem>
-                                <MenuItem>
+                                </MenuItem> */}
+                                {/* <MenuItem>
                                     <ListItemIcon>
                                         <Settings fontSize='small' />
                                     </ListItemIcon>
                                     Settings
-                                </MenuItem>
-                                <MenuItem>
+                                </MenuItem> */}
+                                <MenuItem onClick={()=>{
+                                            localStorage.clear()
+                                            window.location.reload();
+                                            }}>
                                     <ListItemIcon>
                                         <Logout fontSize='small' />
                                     </ListItemIcon>

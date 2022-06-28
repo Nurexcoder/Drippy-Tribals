@@ -90,6 +90,7 @@ router.get("/", async (req, res) => {
     let products;
     console.log(qNew, qCategory);
 
+    
     if (qNew) {
         products = await Product.find().sort({ createdAt: -1 }).limit(1);
     } else if (qCategory) {

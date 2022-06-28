@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import NavBar from "../components/NavBar";
 import { mobile } from "../responsive";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -229,7 +230,10 @@ const Cart = () => {
             return;
         }
 
-        const result = await axios.post("http://localhost:5000/api/payment/orders",{...cart});
+        const result = await axios.post(
+            "http://localhost:5000/api/payment/orders",
+            { ...cart }
+        );
 
         if (!result) {
             alert("Server error. Are you online?");
@@ -252,7 +256,7 @@ const Cart = () => {
                     razorpayPaymentId: response.razorpay_payment_id,
                     razorpayOrderId: response.razorpay_order_id,
                     razorpaySignature: response.razorpay_signature,
-                    cart
+                    cart,
                 };
 
                 const result = await axios.post(
@@ -265,10 +269,10 @@ const Cart = () => {
             prefill: {
                 name: "Hibjul Ahmed",
                 email: "hibjulahmed@gmail.com",
-                contact: user.phone||"9999999999",
+                contact: user.phone || "9999999999",
             },
             notes: {
-                address: user.address||"Soumya Dey Corporate Office",
+                address: user.address || "Soumya Dey Corporate Office",
             },
             theme: {
                 color: "#61dafb",
@@ -290,9 +294,9 @@ const Cart = () => {
                         <TopText>SHOPPING BAG({cart.quantity})</TopText>
                         <TopText>YOUR WISHLIST(0)</TopText>
                     </TopTexts>
-                    <TopButton onClick={displayRazorpay} type='filled'>
-                        CHECKOUT NOW
-                    </TopButton>
+                    <Link to='/checkout'>
+                        <TopButton type='filled'>CHECKOUT NOW</TopButton>
+                    </Link>
                 </Top>
                 <Bottom>
                     <Info>
@@ -355,7 +359,9 @@ const Cart = () => {
                                 ${cart.total}
                             </SummaryPrice>
                         </SummaryItem>
-                        <Button>CHECKOUT NOW</Button>
+                        <Link to='/checkout'>
+                            <Button>CHECKOUT NOW</Button>
+                        </Link>
                     </Summary>
                 </Bottom>
             </Wrapper>

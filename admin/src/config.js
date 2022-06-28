@@ -1,7 +1,7 @@
 // module.exports={
 import axios from "axios";
-const url = "http://localhost:5000/api";
+const url = "https://envtestfrom.herokuapp.com/api";
 // }
 export const publicUrl = axios.create({
-    baseURL: "http://localhost:5000/api",
+    baseURL: "https://envtestfrom.herokuapp.com/api",
 });
