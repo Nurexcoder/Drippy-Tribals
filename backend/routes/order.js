@@ -50,7 +50,7 @@ router.get("/find/:id",verifyTokenAndAuth, async (req,res)=>{
     
     try {
         const Orders = await Order.find({UserId: req.params.userId})
-         res.send(200).json(Order);
+         res.send(200).json(Orders);
     } catch (error) {
         res.status(500).json(error);
     }
@@ -62,6 +62,7 @@ router.get('/',verifyTokenAndAuthAdmin,async(req,res)=>{
     
     try {
         const Orders = await Order.find();
+        console.log(Orders)
         res.status(200).json(Orders);
 
     } 

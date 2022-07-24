@@ -3,26 +3,25 @@ import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
 import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { publicUrl } from "../../config";
 
 export default function UserList() {
     const [data, setData] = useState(userRows);
-    
 
     const handleDelete = (id) => {
         setData(data.filter((item) => item.id !== id));
     };
     useEffect(() => {
-      const user = JSON.parse(localStorage.getItem('user'))
+        const user = JSON.parse(localStorage.getItem("user"));
         const getProducts = async () => {
-            const res = await publicUrl.get("/users",{
-                headers:{
-                    authToken:"Barear "+user.accessToken
-                }
+            const res = await publicUrl.get("/users", {
+                headers: {
+                    authorization: "Barear " + user.accessToken,
+                },
             });
             let tempData = [];
-            console.log(user)
+            console.log(user);
             res.data.map((user) => {
                 tempData.push({
                     id: user._id,

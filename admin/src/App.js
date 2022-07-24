@@ -17,6 +17,7 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Login from "./pages/Login/Login";
 import { useState } from "react";
 import { useEffect } from "react";
+import OrderList from "./pages/Orders/OrderList";
 
 function App() {
     const [user, setUser] = useState();
@@ -49,6 +50,9 @@ function App() {
                     </Route>
                     <Route path='/products'>
                         <ProductList />
+                    </Route>
+                    <Route path='/orders'>
+                        <OrderList />
                     </Route>
                     <Route path='/product/:productId'>
                         <Product />

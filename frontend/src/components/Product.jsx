@@ -71,10 +71,13 @@ const Icon = styled.div`
 `;
 const Icons = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 `;
-const Price = styled.div`
-    color: red;
+const Price = styled(Icon)`
+     width: 50px;
+    height: 50px;
 `;
 const Product = ({ item }) => {
     return (
@@ -91,8 +94,9 @@ const Product = ({ item }) => {
                             <SearchOutlined />
                         </Link>
                     </Icon>
-                </Icons>
+                    
                 <Price>₹ {item.price}</Price>
+                </Icons>
             </Info>
         </Container>
     );

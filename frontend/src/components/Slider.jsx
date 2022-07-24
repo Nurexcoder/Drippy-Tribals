@@ -4,6 +4,7 @@ import ArrowLeftOutlinedIcon from "@material-ui/icons/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@material-ui/icons/ArrowRightOutlined";
 import { datas } from "../data";
 import { mobile } from "../responsive";
+import { WhatsappOutlined } from "@mui/icons-material";
 const Container = styled.div`
     width: 100%;
     height: 100vh;
@@ -52,7 +53,7 @@ const Slide = styled.div`
     background-color: #${(props) => props.bg};
     ${mobile({
         height: "100%",
-        alignItems: "center"
+        alignItems: "center",
     })}
 `;
 const ImgContainer = styled.div`
@@ -63,44 +64,41 @@ const Image = styled.img`
     height: 80%;
     width: auto;
     ${mobile({
-        width:'100%',
-        display:'flex',
-        flexDirection:'column',
-        alignItems:'center',
-        justifyContent:'center',
-        padding:'2px'
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "2px",
     })}
-    
 `;
 const InfoContainer = styled.div`
     flex: 1;
     padding: 50px;
     ${mobile({
-        padding:'10px',
-        width:'100%',
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'flex-start'
+        padding: "10px",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "flex-start",
     })}
-    
 `;
 const Title = styled.h1`
     font-size: 70px;
     ${mobile({
         fontSize: "18px",
     })}
-    
 `;
 const Description = styled.p`
-    margin: 50px 0;
+    margin: 20px 0;
     font-size: 20px;
     letter-spacing: 3px;
     font-weight: 500;
     ${mobile({
         fontSize: "12px",
-        margin:'12px 0',
-        letterSpacing: '1px'
+        margin: "12px 0",
+        letterSpacing: "1px",
     })}
 `;
 
@@ -113,8 +111,22 @@ const Button = styled.button`
 
     ${mobile({
         fontSize: "12px",
-        padding:'5px'
+        padding: "5px",
     })}
+`;
+
+const Phone = styled.div`
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0;
+    /* justify-content: flex-start;
+    align-items: flex-start; */
+`;
+const Message = styled.div``;
+const PhoneNo = styled.div`
+     display: flex;
+    /* justify-content: center; */
+    align-items: center; 
 `;
 const Slider = () => {
     const [slideIndex, setSlideIndex] = useState(0);
@@ -139,6 +151,13 @@ const Slider = () => {
                         <InfoContainer>
                             <Title>{data.title}</Title>
                             <Description>{data.desc}</Description>
+                            <Phone>
+                                <Message>Your can also order using:</Message>
+                                <PhoneNo>
+                                    <WhatsappOutlined />
+                                    {data.ph}
+                                </PhoneNo>
+                            </Phone>
                             <Button>Shop Now</Button>
                         </InfoContainer>
                     </Slide>

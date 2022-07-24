@@ -118,7 +118,7 @@ const Footer = () => {
     return (
         <Container>
             <Left>
-                <Logo>Shopify</Logo>
+                <Logo>Fruit Fresh</Logo>
                 <Desc>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit.
                     Perferendis dolores, odio modi, possimus blanditiis nulla

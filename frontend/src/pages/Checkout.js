@@ -141,13 +141,8 @@ const Checkout = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log(e.target.firstName.value);
-        const products = [];
-        cart.products.map((product) => {
-            products.push({
-                productId: product._id,
-                quantity: product.quantity,
-            });
-        });
+        const products =  cart.products;
+       
         const address = {
             name: e.target.firstName.value + " " + e.target.lastName.value,
             email: e.target.email.value,
